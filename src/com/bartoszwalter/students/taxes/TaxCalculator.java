@@ -8,12 +8,14 @@ public class TaxCalculator {
 	
 	public static double podstawa = 0;
 	public static char umowa = ' ';
+
 	// składki na ubezpieczenia społeczne
 	public static double s_emerytalna = 0; // 9,76% podstawyy
 	public static double s_rentowa = 0; // 1,5% podstawy
 	public static double u_chorobowe = 0; // 2,45% podstawy
 	// składki na ubezpieczenia zdrowotne
-	public static double kosztyUzyskania = 111.25; 
+
+	public static double kosztyUzyskania = 0;
 	public static double s_zdrow1 = 0; // od podstawy wymiaru 9%
 	public static double s_zdrow2 = 0; // od podstawy wymiaru 7,75 %
 	public static double zaliczkaNaPod = 0; // zaliczka na podatek dochodowy 18%
@@ -58,8 +60,8 @@ public class TaxCalculator {
 			System.out.println("Składka na ubezpieczenie zdrowotne: 9% = "
 					+ df00.format(s_zdrow1) + " 7,75% = " + df00.format(s_zdrow2));
 			System.out.println("Koszty uzyskania przychodu w stałej wysokości "
-					+ kosztyUzyskania);
-			double podstawaOpodat = oPodstawa - kosztyUzyskania;
+					+ Parametry.STALE_KOSZTY_UZYSKANIA_PRZYCHODU);
+			double podstawaOpodat = oPodstawa - Parametry.STALE_KOSZTY_UZYSKANIA_PRZYCHODU;
 			double podstawaOpodat0 = Double
 					.parseDouble(df.format(podstawaOpodat));
 			System.out.println("Podstawa opodatkowania " + podstawaOpodat
@@ -133,18 +135,18 @@ public class TaxCalculator {
 	}
 
 	public static void obliczPodatek(double podstawa) {
-		zaliczkaNaPod = (podstawa * 18) / 100;
+		zaliczkaNaPod = podstawa * Parametry.PROCENT_ZALICZKI_NA_PODATEK;
 	}
 
 	public static double obliczonaPodstawa(double podstawa) {
-		s_emerytalna = (podstawa * 9.76) / 100;
-		s_rentowa = (podstawa * 1.5) / 100;
-		u_chorobowe = (podstawa * 2.45) / 100;
+		s_emerytalna = podstawa * Parametry.PROCENT_SKLADKI_UBEZPIECZENIA_EMERYTALNEGO;
+		s_rentowa = podstawa * Parametry.PROCENT_SKLADKI_UBEZPIECZENIA_RENTOWEGO;
+		u_chorobowe = podstawa * Parametry.PROCENT_SKLADKI_UBEZPIECZENIA_CHOROBOWEGO;
 		return (podstawa - s_emerytalna - s_rentowa - u_chorobowe);
 	}
 
 	public static void obliczUbezpieczenia(double podstawa) {
-		s_zdrow1 = (podstawa * 9) / 100;
-		s_zdrow2 = (podstawa * 7.75) / 100;
+		s_zdrow1 = podstawa * Parametry.PROCENT_SKLADKI_ZDROWOTNEJ;
+		s_zdrow2 = podstawa * Parametry.PROCENT_ODLICZENIA_SKLADKI_ZDROWOTNEJ;
 	}
 }
