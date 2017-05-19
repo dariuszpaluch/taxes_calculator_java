@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
 public class TaxCalculator {
 	
 	public static double podstawa = 0;
-	public static char umowa = ' ';
+	public static RodzajUmowy umowa;
 
 	// składki na ubezpieczenia społeczne
 	public static double s_emerytalna = 0; // 9,76% podstawyy
@@ -25,14 +25,12 @@ public class TaxCalculator {
 
 	public static void main(String[] args) {
 		try {
-			InputStreamReader isr = new InputStreamReader(System.in);
-			BufferedReader br = new BufferedReader(isr);
-			
-			System.out.print("Podaj kwotę dochodu: ");	
-			podstawa = Double.parseDouble(br.readLine());
-			
-			System.out.print("Typ umowy: (P)raca, (Z)lecenie: ");
-			umowa = br.readLine().charAt(0);
+//			InputStreamReader isr = new InputStreamReader(System.in);
+//			BufferedReader br = new BufferedReader(isr);
+
+			Interfejs interfejs = new Interfejs();
+			podstawa = interfejs.odczytajKwoteDochodu();
+			umowa = interfejs.odczytajTypUmowy();
 			
 		} catch (Exception ex) {
 			System.out.println("Błędna kwota");
@@ -43,7 +41,7 @@ public class TaxCalculator {
 		DecimalFormat df00 = new DecimalFormat("#.00");
 		DecimalFormat df = new DecimalFormat("#");
 		
-		if (umowa == 'P') {
+		if (umowa == RodzajUmowy.PRACA) {
 			System.out.println("UMOWA O PRACĘ");
 			System.out.println("Podstawa wymiaru składek " + podstawa);
 			double oPodstawa = obliczonaPodstawa(podstawa);
@@ -84,7 +82,7 @@ public class TaxCalculator {
 			System.out
 					.println("Pracownik otrzyma wynagrodzenie netto w wysokości = "
 							+ df00.format(wynagrodzenie));
-		} else if (umowa == 'Z') {
+		} else if (umowa == RodzajUmowy.ZLECENIE) {
 			System.out.println("UMOWA-ZLECENIE");
 			System.out.println("Podstawa wymiaru składek " + podstawa);
 			double oPodstawa = obliczonaPodstawa(podstawa);
@@ -101,7 +99,7 @@ public class TaxCalculator {
 			System.out.println("Składka na ubezpieczenie zdrowotne: 9% = "
 					+ df00.format(s_zdrow1) + " 7,75% = " + df00.format(s_zdrow2));
 			kwotaZmiejsz = 0;
-			kosztyUzyskania = (oPodstawa * 20) / 100;
+			kosztyUzyskania = oPodstawa * Parametry.PROCENT_KOSZTY_UZYSKANIA_PRZYCHODU;
 			System.out.println("Koszty uzyskania przychodu (stałe) "
 					+ kosztyUzyskania);
 			double podstawaOpodat = oPodstawa - kosztyUzyskania;
