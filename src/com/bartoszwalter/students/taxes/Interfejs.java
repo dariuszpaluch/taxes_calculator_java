@@ -1,5 +1,8 @@
 package com.bartoszwalter.students.taxes;
 
+import com.bartoszwalter.students.taxes.umowa.Umowa;
+import com.bartoszwalter.students.taxes.umowa.UmowaOPrace;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -47,5 +50,16 @@ public class Interfejs {
     System.out.println("Składka na ubezpieczenie zdrowotne: 9% = " + df00.format(umowa.getS_zdrow1()) + " 7,75% = " + df00.format(umowa.getS_zdrow2()));
     System.out.println("Koszty uzyskania przychodu:  " + umowa.getKosztyUzyskania());
     System.out.println("Podstawa opodatkowania " + umowa.getPodstawaOpodatkowania() + " zaokrąglona " + df.format((int)umowa.getPodstawaOpodatkowaniaZaokraglona()));
+    System.out.println("Zaliczka na podatek dochodowy 18 % = " + umowa.getZaliczkaNaPod());
+
+    if(umowa instanceof UmowaOPrace) {
+      			System.out.println("Kwota wolna od podatku = " + umowa.getKwotaWolnaodPodatku());
+
+    }
+
+    System.out.println("Podatek potrącony = " + df00.format(umowa.getPodatekPotrącony()));
+    System.out.println("Zaliczka do urzędu skarbowego = " + df00.format(umowa.getZaliczkaUS()) + " po zaokrągleniu = " + df.format(umowa.getZaliczkaUSZaokraglona()));
+    System.out.println();
+    System.out.println("Pracownik otrzyma wynagrodzenie netto w wysokości = " + df00.format(umowa.getWynagrodzenie()));
   }
 }
