@@ -30,7 +30,8 @@ public class TaxCalculator {
 		}
 
 		if(umowa != null) {
-			Interfejs.wyswietlWynik(umowa);
+			Wydruk wydruk = new WydrukKonsoli(umowa);
+			wydruk.wyswietl();
 		}
 	}
 
